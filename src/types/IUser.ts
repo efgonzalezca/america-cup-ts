@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 
 export interface IUser {
   _id: string,
+  role: 'admin' | 'user',
   password: string,
   names: string,
   surnames: string,
@@ -12,7 +13,6 @@ export interface IUser {
     third_place: string
   }
   is_active: boolean
-  //TODO: add role to manage accessing
 }
 
 export interface IMatchResult {

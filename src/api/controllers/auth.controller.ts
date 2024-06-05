@@ -28,7 +28,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     }
 
     let payload: IPayload = {
-      document: user._id
+      document: user._id,
+      role: user.role
     }
     
     const matches_results = await UserMatchesService.findAllByUser(user._id, {_id: false, user_id: false})?.lean();
@@ -40,6 +41,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       .json({
         token: token,
         document: user._id,
+        role: user.role,
         names: user.names,
         score: user.score,
         selected_teams: user.selected_teams,
