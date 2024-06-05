@@ -23,3 +23,10 @@ export const verifyJWT = (req: ICustomRequest, _res: Response, next: NextFunctio
     throw new ErrorHandler(401, 40103, 'Authorization error');
   }
 }
+
+export const authorized = (req: ICustomRequest, _res: Response, next: NextFunction) => {
+  if(req.payload?.role !== 'admin') {
+    throw new ErrorHandler(403, 40301, 'Forbidden access');
+  }
+  return next();
+}
