@@ -6,6 +6,7 @@ export interface IUser {
   password: string,
   names: string,
   surnames: string,
+  cellphone: string,
   score: number,
   selected_teams: {
     champion: string,

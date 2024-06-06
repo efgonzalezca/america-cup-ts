@@ -22,7 +22,7 @@ const surnames = Joi.string().regex(new RegExp('^[a-zA-ZÀ-ÿ \\u00f1 \\u00d1 \\
     'string.min': 'surnames length must be at least 3 characters long',
     'any.required': 'surnames field is requerid'
   });
-
+const cellphone = Joi.string().regex(new RegExp('^[3]{1}[0-9]{9}$')).min(10).max(10);
 const password = Joi.string().regex(new RegExp('^[a-zA-ZÀ-ÿ \\u00f1 \\u00d1 \\s 0-9]+$')).min(8).max(30);
 
 export const modifyMatchFromUserParamsDto = Joi.object({
@@ -43,7 +43,8 @@ export const registerDto = Joi.object({
   document: document,
   names: names,
   surnames: surnames,
-  password: password
+  password: password,
+  cellphone: cellphone
 })
 
 export const userUpdateBodyDto = Joi.object({

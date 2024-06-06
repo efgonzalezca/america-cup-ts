@@ -28,6 +28,10 @@ export const userSchema = new Schema({
     type: String,
     required: true,
   },
+  cellphone: {
+    type: String,
+    required: true,
+  },
   score: {
     type: Number,
     default: 0,
