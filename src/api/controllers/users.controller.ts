@@ -8,7 +8,8 @@ interface register {
   document: string,
   names: string,
   surnames: string,
-  password: string
+  password: string,
+  cellphone: string
 }
 
 interface updated {
@@ -88,7 +89,8 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       document,
       names,
       surnames,
-      password
+      password,
+      cellphone
     } = <register>req.body;
 
     const user = await UserService.exists(document);
@@ -102,6 +104,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       names: names,
       surnames: surnames,
       password: password,
+      cellphone: cellphone,
       score: 0,
       selected_teams: {
         champion: null,
