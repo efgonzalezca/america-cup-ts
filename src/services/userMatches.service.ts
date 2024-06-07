@@ -11,6 +11,14 @@ export interface matchData {
   visitor_score: number | null
 }
 
+export interface discriminatedPoints {
+  matchPoints: number,
+  localScorePoints: number,
+  visitorScorePoints: number,
+  exactScore: number,
+  addPoints: number
+}
+
 export class UserMatchesService {
   private static dbName: string = config.dbNameApp;
   private static db: (Connection | undefined) = connections.find((conn) => {
@@ -79,12 +87,17 @@ export class UserMatchesService {
     return;
   }
 
-  static updateMatchPoints(user_id: string, match_id: string, points: number) {
+  static updateMatchPoints(user_id: string, match_id: string, points: number, discriminated_points: discriminatedPoints) {
     this.createModel()
     if(this.model) {
       return this.model.findOneAndUpdate(
         {user_id: user_id, match_id: match_id},
-        {points: points}
+        {
+          $set: {
+            points: points,
+            discriminated_points: discriminated_points
+          }
+        }
       ).lean();
     }
     return;
