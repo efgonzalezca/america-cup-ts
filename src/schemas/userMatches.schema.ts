@@ -1,5 +1,23 @@
 import { Schema, Types } from 'mongoose';
 
+const discriminated_points = new Schema({
+  matchPoints: {
+    type: Number
+  },
+  localScorePoints: {
+    type: Number
+  },
+  visitorScorePoints: {
+    type: Number
+  },
+  exactScore: {
+    type: Number
+  },
+  addPoints: {
+    type: Number
+  }
+}, {_id: false})
+
 export const userMatchesSchema = new Schema({
   _id: {
     type: Types.ObjectId,
@@ -20,8 +38,12 @@ export const userMatchesSchema = new Schema({
   visitor_score: {
     type: Number,
   },
+  discriminated_points: {
+    type: discriminated_points,
+  },
   points: {
-    type: Number
+    type: Number,
+    default: 0
   }
 }, {
   collection: 'users_matches',

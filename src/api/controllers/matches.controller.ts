@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { IMatch } from '../../types';
-import { getExtraParams, getPointsMatch, logger } from '../../utils';
 import { MatchService, UserMatchesService, UserService } from '../../services';
+import { getExtraParams, getPointsMatchDiscriminated, logger } from '../../utils';
 
 export const getMatches = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -26,12 +26,13 @@ export const updateMatch = async (req: Request, res: Response, next: NextFunctio
     if(users){
       for (const user of users) {
         let userMatch = await UserMatchesService.findByUserAndMatch(user._id, id)?.lean();
-        let matchPoint = getPointsMatch(<IMatch>updatedMatch, <number>userMatch?.local_score, <number>userMatch?.visitor_score);
-        await UserMatchesService.updateMatchPoints(user._id, id, matchPoint);
+        let matchPointsDiscriminated = getPointsMatchDiscriminated(<IMatch>updatedMatch, <number>userMatch?.local_score, <number>userMatch?.visitor_score);
+        let matchPoints = Object.values(matchPointsDiscriminated).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        await UserMatchesService.updateMatchPoints(user._id, id, matchPoints, matchPointsDiscriminated);
         let updatedUser = {
           _id: user._id,
           score: user.score,
-          points: matchPoint
+          points: matchPoints
         }
         updatedUsers.push(updatedUser);
       }
