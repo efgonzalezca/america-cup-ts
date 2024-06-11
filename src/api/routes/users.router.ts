@@ -1,9 +1,16 @@
 import { json, Router } from 'express';
 
-import { getMatchesUsersById, getUsersRanking, modifyMatchFromUser, register, updateUser } from '../controllers';
+import { getMatchesUsersById, getUsersRanking, modifyMatchFromUser, register, resetUserPassword, updateUser } from '../controllers';
 import { validatorHandler, verifyJWT } from '../middlewares';
 
 export const router: Router = Router();
+
+router.patch(
+  '/reset-password',
+  json(),
+  validatorHandler('resetUserPassword', 'body'),
+  resetUserPassword
+)
 
 router.patch(
   '/:userId/matches/:id',
