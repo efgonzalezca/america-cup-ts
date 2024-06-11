@@ -147,6 +147,10 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
 export const updateUser = async (req: ICustomRequest, res: Response, next: NextFunction) => {
   try {
+    const firstMatch = await MatchService.findById('1')?.lean();
+    if(!firstMatch || new Date().getTime() > firstMatch.date.getTime()) {
+      throw new ErrorHandler(423, 42301, 'Date deadline exceeded');
+    }
     const { password, champion, runner_up, third_place } = <updated>req.body;
     if(password) {
       await UserService.updateById(<string>req.payload?.document, password, 'password');
