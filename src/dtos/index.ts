@@ -5,5 +5,6 @@ export {
   modifyMatchFromUserParamsDto,
   registerDto,
   userUpdateBodyDto,
-  userUpdateParamsDto
+  userUpdateParamsDto,
+  resetUserPasswordDto
 } from './user.dto';

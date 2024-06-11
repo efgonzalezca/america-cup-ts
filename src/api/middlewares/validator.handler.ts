@@ -7,17 +7,19 @@ import {
   modifyMatchFromUserBodyDto,
   modifyMatchFromUserParamsDto,
   registerDto,
+  resetUserPasswordDto,
   userUpdateBodyDto,
   userUpdateParamsDto
 } from '../../dtos';
 
 const schemas = {
   login: {schema: loginDto, code: 40006},
-  modifyMatchFromUserParams: {schema: modifyMatchFromUserParamsDto, code:40007},
-  modifyMatchFromUserBody: {schema: modifyMatchFromUserBodyDto, code:40008},
-  register: {schema: registerDto, code:40009},
-  userUpdateParams: {schema: userUpdateParamsDto, code:40010},
-  userUpdateBody: {schema: userUpdateBodyDto, code:40011}
+  modifyMatchFromUserParams: {schema: modifyMatchFromUserParamsDto, code: 40007},
+  modifyMatchFromUserBody: {schema: modifyMatchFromUserBodyDto, code: 40008},
+  register: {schema: registerDto, code: 40009},
+  userUpdateParams: {schema: userUpdateParamsDto, code: 40010},
+  userUpdateBody: {schema: userUpdateBodyDto, code: 40011},
+  resetUserPassword: {schema: resetUserPasswordDto, code: 40012}
 }
 
 export const validatorHandler = (schema: validateSchema, property: requestProperty ) => {

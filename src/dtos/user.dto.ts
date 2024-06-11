@@ -58,3 +58,10 @@ export const userUpdateParamsDto = Joi.object({
   id: document
     .required()
 })
+
+export const resetUserPasswordDto = Joi.object({
+  document: document
+    .required(),
+  newPassword: password
+    .required()
+})

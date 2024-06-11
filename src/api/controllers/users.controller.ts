@@ -19,6 +19,11 @@ interface updated {
   third_place?: string
 }
 
+interface resetPassword {
+  document: string,
+  newPassword: string
+}
+
 export const getMatchesUsersById = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   try {
@@ -73,7 +78,7 @@ export const modifyMatchFromUser = async (req: Request, res: Response, next: Nex
 
 export const getUsersRanking = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    let users = await UserService.findAll({score: true, names: true})?.lean();
+    let users = await UserService.findAll({score: true, names: true, surnames: true})?.lean();
     logger.info('Read usermatches', getExtraParams(req));
     return res
       .status(200)
@@ -143,7 +148,6 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 export const updateUser = async (req: ICustomRequest, res: Response, next: NextFunction) => {
   try {
     const { password, champion, runner_up, third_place } = <updated>req.body;
-
     if(password) {
       await UserService.updateById(<string>req.payload?.document, password, 'password');
     } else if(champion) {
@@ -159,6 +163,20 @@ export const updateUser = async (req: ICustomRequest, res: Response, next: NextF
       .status(200)
       .json({
         message: 'User updated'
+      })
+  } catch(err) {
+    return next(err);
+  }
+}
+
+export const resetUserPassword = async (req: ICustomRequest, res: Response, next: NextFunction) => {
+  try {
+    const { document, newPassword } = <resetPassword>req.body;
+    await UserService.updateById(document, newPassword, 'password');
+    return res
+      .status(200)
+      .json({
+        message: 'User password reseted'
       })
   } catch(err) {
     return next(err);
