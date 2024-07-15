@@ -13,6 +13,7 @@ export interface IUser {
     runner_up: string,
     third_place: string
   }
+  podium_score: number,
   is_active: boolean
 }
 
